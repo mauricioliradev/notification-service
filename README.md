@@ -1,24 +1,68 @@
-# README
+# Notification Service (Microsserviço de Notificações)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Responsável por centralizar logs e eventos do sistema. 
 
-Things you may want to cover:
+## 📋 Requisitos
+* **Ruby:** 3.4.7
+* **Rails:** 8.1+ (API Mode)
+* **Banco de Dados:** PostgreSQL
 
-* Ruby version
+## 🚀 Como Executar
 
-* System dependencies
+Clonar este repositório na mesma pasta (desafio-contact2sale) que os outros serviços estão.
 
-* Configuration
+Este serviço faz parte da stack principal. Para rodar todo o ambiente:
 
-* Database creation
+```bash
+# Na raiz do projeto webscraping-manager
+sudo docker-compose up --build
+```
 
-* Database initialization
+## 🔌 Documentação da API
 
-* How to run the test suite
+### 1. Criar Notificação
 
-* Services (job queues, cache servers, search engines, etc.)
+Registra um novo evento do sistema.
 
-* Deployment instructions
+**Endpoint:** `POST /notifications`
 
-* ...
+**Body (JSON):**
+```json
+{
+  "notification": {
+    "task_id": 123,
+    "event_type": "task_completed",
+    "data": {
+      "vehicle": "Jeep Compass",
+      "price": "R$ 150.000",
+      "obs": "Dados flexíveis aqui"
+    }
+  }
+}
+```
+
+**Exemplo cURL:**
+```bash
+curl -X POST http://localhost:3002/notifications \
+  -H "Content-Type: application/json" \
+  -d '{
+    "notification": {
+      "task_id": 1,
+      "event_type": "task_completed",
+      "data": { "msg": "Teste manual via curl" }
+    }
+  }'
+```
+
+### 2. Listar Notificações
+
+Retorna o histórico recente.
+
+**Endpoint:** `GET /notifications`
+
+**Exemplo cURL:**
+```bash
+curl http://localhost:3002/notifications
+```
+
+
